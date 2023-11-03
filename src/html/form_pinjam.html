@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Modernize Free</title>
+    <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
+    <link rel="stylesheet" href="../assets/css/styles.min.css" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+              <h5 class="card-title fw-semibold mb-4">Pinjam-Pinjam</h5>
+              <div class="card">
+                  <div class="card-body">
+                  <form>
+                    <div class="mb-3">
+                        <label for="NamaPeminjam" class="form-label">Nama Peminjam</label>
+                        <input type="text" class="form-control" id="NamaPeminjam">
+                      </div>
+                      <div class="mb-3">
+                        <label for="Tanggal" class="form-label">Tanggal</label>
+                        <input type="date" class="form-control" id="Tanggal">
+                    </div>
+                    <div class="mb-3">
+                      <label for="Ruangan" class="form-label">Ruangan</label>
+                      <select id="Ruangan" name="Ruangan" class="form-control">
+                          <option value="0001">Ruang Makan</option>
+                          <option value="0002">Ruang Keluarga</option>
+                          <option value="0003">Ruang Bermain</option>
+                          <option value="0004">Ruang Tidur</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="Unit" class="form-label">Unit</label>
+                      <select id="Unit" name="Unit" class="form-control">
+                          <option value="0001">Primary</option>
+                          <option value="0002">Secondary</option>
+                          <option value="0003">Tertiary</option>
+                      </select>
+                    </div>
+                      <div class="mb-3">
+                        <label for="JamPeminjaman" class="form-label" aria-describedby="Dari">Jam Peminjaman</label>
+                        <div id="Dari" class="form-text">Dari</div>
+                        <input type="time" class="form-control" id="JamPeminjaman" aria-describedby="Sampai">
+                        <div id="Sampai" class="form-text">Sampai</div>
+                        <input type="time" class="form-control" id="JamPeminjaman">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Keterangan" class="form-label">Keterangan</label>
+                        <input type="text" class="form-control" id="Keterangan">
+                    </div>
+                    <div class="mb-3 form-check">
+                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                      <label class="form-check-label" for="exampleCheck1">Saya sudah menyetujui</label>
+                      <a href="https://www.youtube.com/">persyaratan dan ketentuan</a>
+                      <label class="form-check-label" for="exampleCheck1">yang berlaku</label>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+</html>
