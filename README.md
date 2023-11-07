@@ -1,3 +1,1 @@
 # pinjam
-
-hiyahiyahiyahiya
