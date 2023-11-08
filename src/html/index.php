@@ -1,3 +1,8 @@
+<?php
+session_start();
+include 'koneksi.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -95,7 +100,10 @@
                     <h6 class="fw-semibold mb-0">Tanggal</h6>
                   </th>
                   <th class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0">Ruang dan Unit</h6>
+                    <h6 class="fw-semibold mb-0">Ruangan</h6>
+                  </th>
+                  <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Unit</h6>
                   </th>
                   <th class="border-bottom-0">
                     <h6 class="fw-semibold mb-0">Jam Peminjaman</h6>
@@ -112,56 +120,45 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="border-bottom-0">
-                    <h6 class="fw-semibold mb-0">123</h6>
-                  </td>
-                  <td class="border-bottom-0">
-                    <h6 class="fw-semibold mb-1">Adam</h6>
-                  </td>
-                  <td class="border-bottom-0">
-                    <h6 class="fw-semibold mb-1">Sabtu, 12 Desember 2005</h6>
-                  </td>
-                  <td class="border-bottom-0">
-                    <h6 class="fw-semibold mb-1">Ruang Makan</h6>
-                    <span class="fw-normal">0001</span>
-                  </td>
-                  <td class="border-bottom-0">
-                    <h6 class="fw-semibold mb-1">07:00 - 21:00</h6>
-                  </td>
-                  <td class="border-bottom-0">
-                    <h6 class="fw-semibold mb-1">BEGITUUUuuu</h6>
-                  </td>
-                  <td class="border-bottom-0">
-                    <button type="button" class="btn btn-primary m-1">Update</button>
-                    <button type="button" class="btn btn-danger m-1">Delete</button>
-                  </td>
-                </tr>
-                <tr>
+                  <?php $query = mysqli_query($conn, "SELECT * FROM jadwal_pinjam"); ?>
+                  <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+                  <tr>
                     <td class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">124</h6>
+                      <h6 class="fw-semibold mb-0"><?php echo $row['id_pinjam'] ?></h6>
                     </td>
                     <td class="border-bottom-0">
-                      <h6 class="fw-semibold mb-1">Adam Lagi</h6>
+                      <h6 class="fw-semibold mb-1"><?php echo $row['nama_peminjam'] ?></h6>
                     </td>
                     <td class="border-bottom-0">
-                      <h6 class="fw-semibold mb-1">Minggu, 13 Desember 2005</h6>
+                      <h6 class="fw-semibold mb-1"><?php echo $row['tanggal'] ?></h6>
                     </td>
                     <td class="border-bottom-0">
-                      <h6 class="fw-semibold mb-1">Ruang Tidur</h6>
-                      <span class="fw-normal">0003</span>
+                      <h6 class="fw-semibold mb-1"><?php $ruangan = $row['id_ruang'];
+                                  if ($ruangan == '0001') echo 'Ruang Makan';
+                                  elseif ($ruangan == '0002') echo 'Ruang Keluarga';
+                                  elseif ($ruangan == '0003') echo 'Ruang Bermain';
+                                  elseif ($ruangan == '0004') echo 'Ruang Tidur'; ?></h6>
+                      <span class="fw-normal"><?php echo $row['id_ruang'] ?></span>
                     </td>
                     <td class="border-bottom-0">
-                      <h6 class="fw-semibold mb-1">21:00 - 07:00</h6>
+                      <h6 class="fw-semibold mb-1"><?php $unit = $row['id_unit'];
+                                  if ($unit == '0011') echo 'Primary';
+                                  elseif ($unit == '0012') echo 'Secondary';
+                                  elseif ($unit == '0013') echo 'Tertiary';?></h6>
+                      <span class="fw-normal"><?php echo $row['id_unit'] ?></span>
                     </td>
                     <td class="border-bottom-0">
-                      <h6 class="fw-semibold mb-1">GGGGGGGG</h6>
+                      <h6 class="fw-semibold mb-1"><?php echo $row['jam_awal'] ?> - <?php echo $row['jam_akhir'] ?></h6>
                     </td>
                     <td class="border-bottom-0">
-                    <button type="button" class="btn btn-primary m-1">Update</button>
-                    <button type="button" class="btn btn-danger m-1">Delete</button>
+                      <h6 class="fw-semibold mb-1"><?php echo $row['keterangan'] ?></h6>
+                    </td>
+                    <td class="border-bottom-0">
+                    <a href="form-update.php?id_pinjam=<?php echo $row['id_pinjam'] ?>" class="btn btn-primary m-1">Update</a>
                   </td>
                   </tr>
+                  <?php endwhile; ?>
+
               </tbody>
             </table>
           </div>

@@ -11,7 +11,24 @@ session_start();
 // }
 
 
+
 if (isset($_POST['submit'])) {
+  // Generate ID acak
+  function generateRandomID($length)
+  {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $id = '';
+    $charactersLength = strlen($characters);
+
+    for ($i = 0; $i < $length; $i++) {
+      $id .= $characters[rand(0, $charactersLength - 1)];
+    }
+
+    return $id;
+  }
+
+  $id_pinjam = generateRandomID(5);
+
   $tanggal = $_POST['tanggal'];
   $jam_awal = $_POST['jam_awal'];
   $jam_akhir = $_POST['jam_akhir'];
@@ -20,19 +37,19 @@ if (isset($_POST['submit'])) {
   $id_ruang = $_POST['id_ruang'];
   $id_unit = $_POST['id_unit'];
 
-  $query = "INSERT INTO jadwal_pinjam (tanggal, jam_awal, jam_akhir, nama_peminjam, keterangan, id_ruang, id_unit) 
-    VALUES ('$tanggal', '$jam_awal', '$jam_akhir', '$nama_peminjam', '$keterangan', '$id_ruang', '$id_unit')";
+  $query = "INSERT INTO jadwal_pinjam (id_pinjam, tanggal, jam_awal, jam_akhir, nama_peminjam, keterangan, id_ruang, id_unit) 
+            VALUES ('$id_pinjam', '$tanggal', '$jam_awal', '$jam_akhir', '$nama_peminjam', '$keterangan', '$id_ruang', '$id_unit')";
 
   $result = mysqli_query($conn, $query);
   if ($result) {
     // Eksekusi berhasil, arahkan ke URL yang diinginkan
     $baseDirectory = "http://localhost/modern/pinjam/src/html/";
     header("Location: $baseDirectory");
-} else {
+  } else {
     echo '<script>alert("Terjadi Kesalahan");</script>';
+  }
 }
 
-}
 ?>
 
 <!DOCTYPE html>
@@ -118,7 +135,7 @@ if (isset($_POST['submit'])) {
               <h5 class="card-title fw-semibold mb-4">Pinjam-Pinjam</h5>
               <div class="card">
                 <div class="card-body">
-                <form method="post" enctype="multipart/form-data">
+                  <form method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                       <label for="nama_peminjam" class="form-label">Nama Peminjam</label>
                       <input type="text" class="form-control" id="nama_peminjam" name="nama_peminjam">
