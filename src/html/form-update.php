@@ -36,34 +36,25 @@ if (isset($_GET['id_pinjam'])) {
 }
 
 if (isset($_POST['delete'])) {
-    $id_pinjam = $_POST['id_pinjam']; // Pastikan Anda memiliki nilai id_pinjam dari form
+    $id_pinjam = $_GET['id_pinjam'];
 
-    // Prepare the DELETE statement with a placeholder for the ID
-    $querydelete = "DELETE FROM jadwal_pinjam WHERE id_pinjam = ?";
+    // Pastikan $id_pinjam adalah nilai yang sesuai, dan lakukan operasi DELETE.
+    
+    // Prepare the DELETE statement
+    $querydelete = "DELETE FROM jadwal_pinjam WHERE id_pinjam = '$id_pinjam'";
 
-    // Create a prepared statement
-    $stmt = mysqli_prepare($conn, $querydelete);
+    // Execute the statement
+    $resultdelete = mysqli_query($conn, $querydelete);
 
-    if ($stmt) {
-        // Bind the ID parameter
-        mysqli_stmt_bind_param($stmt, "s", $id_pinjam);
-
-        // Execute the statement
-        $resultdelete = mysqli_stmt_execute($stmt);
-
-        if ($resultdelete) {
-            $baseDirectory = "http://localhost/modern/pinjam/src/html/";
-            header("Location: $baseDirectory");
-        } else {
-            echo '<script>alert("Terjadi Kesalahan saat menghapus data kegiatan.");</script>';
-        }
-
-        // Close the statement
-        mysqli_stmt_close($stmt);
+    if ($resultdelete) {
+        $baseDirectory = "http://localhost/modern/pinjam/src/html/";
+        header("Location: $baseDirectory");
     } else {
-        echo "Failed to prepare the DELETE statement.";
+        echo '<script>alert("Terjadi Kesalahan saat menghapus data kegiatan.");</script>';
     }
 }
+
+
 
 
 if (isset($_POST['submit'])) {
@@ -103,7 +94,7 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Modernize Free</title>
+    <title>Form Update</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="../assets/css/styles.min.css" />
 </head>
@@ -112,63 +103,71 @@ if (isset($_POST['submit'])) {
     <!--  Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
         <!-- Sidebar Start -->
-        <aside class="left-sidebar">
-            <!-- Sidebar scroll-->
-            <div>
-                <!-- Sidebar navigation-->
-                <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-                    <ul id="sidebarnav">
-                        <li class="nav-small-cap">
-                            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                            <span class="hide-menu">Home</span>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="./index.php" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-layout-dashboard"></i>
-                                </span>
-                                <span class="hide-menu">Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="nav-small-cap">
-                            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                            <span class="hide-menu">Forms</span>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="./form-pinjam.php" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-file-description"></i>
-                                </span>
-                                <span class="hide-menu">Form Pinjam-Pinjam</span>
-                            </a>
-                        </li>
-                        <li class="nav-small-cap">
-                            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                            <span class="hide-menu">AUTH</span>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="./login.php" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-login"></i>
-                                </span>
-                                <span class="hide-menu">Login</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="./tambah-user.php" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-user-plus"></i>
-                                </span>
-                                <span class="hide-menu">New User</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>
-            <!-- End Sidebar scroll-->
-        </aside>
-        <!--  Sidebar End -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Home</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Forms</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./form-pinjam.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-file-description"></i>
+                </span>
+                <span class="hide-menu">Form Pinjam-Pinjam</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./form-ruang.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-file-description"></i>
+                </span>
+                <span class="hide-menu">Form Tambah Ruang</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">AUTH</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./login.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-login"></i>
+                </span>
+                <span class="hide-menu">Login</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./tambah-user.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-user-plus"></i>
+                </span>
+                <span class="hide-menu">New User</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
         <!--  Main wrapper -->
         <div class="body-wrapper">
             <!--  Header Start -->

@@ -13,32 +13,11 @@ session_start();
 
 
 if (isset($_POST['submit'])) {
-  // Generate ID acak
-  function generateRandomID($length)
-  {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $id = '';
-    $charactersLength = strlen($characters);
-
-    for ($i = 0; $i < $length; $i++) {
-      $id .= $characters[rand(0, $charactersLength - 1)];
-    }
-
-    return $id;
-  }
-
-  $id_pinjam = generateRandomID(5);
-
-  $tanggal = $_POST['tanggal'];
-  $jam_awal = $_POST['jam_awal'];
-  $jam_akhir = $_POST['jam_akhir'];
-  $nama_peminjam = $_POST['nama_peminjam'];
-  $keterangan = $_POST['keterangan'];
   $id_ruang = $_POST['id_ruang'];
-  $id_unit = $_POST['id_unit'];
+  $nama_ruang = $_POST['nama_ruang'];
 
-  $query = "INSERT INTO jadwal_pinjam (id_pinjam, tanggal, jam_awal, jam_akhir, nama_peminjam, keterangan, id_ruang, id_unit) 
-            VALUES ('$id_pinjam', '$tanggal', '$jam_awal', '$jam_akhir', '$nama_peminjam', '$keterangan', '$id_ruang', '$id_unit')";
+  $query = "INSERT INTO m_ruang (id_ruang, nama_ruang) 
+            VALUES ('$id_ruang', '$nama_ruang')";
 
   $result = mysqli_query($conn, $query);
   if ($result) {
@@ -58,7 +37,7 @@ if (isset($_POST['submit'])) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Form Pinjam</title>
+  <title>Form Tambah Ruang</title>
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
 </head>
@@ -145,46 +124,12 @@ if (isset($_POST['submit'])) {
                 <div class="card-body">
                   <form method="post" enctype="multipart/form-data">
                     <div class="mb-3">
-                      <label for="nama_peminjam" class="form-label">Nama Peminjam</label>
-                      <input type="text" class="form-control" id="nama_peminjam" name="nama_peminjam">
+                      <label for="id_ruang" class="form-label">id_ruang</label>
+                      <input type="text" class="form-control" id="id_ruang" name="id_ruang">
                     </div>
                     <div class="mb-3">
-                      <label for="id_ruang" class="form-label">Ruangan</label>
-                      <select id="id_ruang" name="id_ruang" class="form-control">
-                        <option value="0001">Ruang Makan</option>
-                        <option value="0002">Ruang Keluarga</option>
-                        <option value="0003">Ruang Bermain</option>
-                        <option value="0004">Ruang Tidur</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="id_unit" class="form-label">Unit</label>
-                      <select id="id_unit" name="id_unit" class="form-control">
-                        <option value="0011">Primary</option>
-                        <option value="0012">Secondary</option>
-                        <option value="0013">Tertiary</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="tanggal" class="form-label">Tanggal</label>
-                      <input type="date" class="form-control" id="tanggal" name="tanggal">
-                    </div>
-                    <div class="mb-3">
-                      <label for="jam_awal" class="form-label" aria-describedby="Dari">Jam Peminjaman</label>
-                      <div id="Dari" class="form-text">Dari</div>
-                      <input type="time" class="form-control" id="jam_awal" name="jam_awal" aria-describedby="Sampai">
-                      <div id="Sampai" class="form-text">Sampai</div>
-                      <input type="time" class="form-control" id="jam_akhir" name="jam_akhir">
-                    </div>
-                    <div class="mb-3">
-                      <label for="keterangan" class="form-label">Keterangan</label>
-                      <input type="text" class="form-control" id="keterangan" name="keterangan">
-                    </div>
-                    <div class="mb-3 form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                      <label class="form-check-label" for="exampleCheck1">Saya sudah menyetujui</label>
-                      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D">persyaratan dan ketentuan</a>
-                      <label class="form-check-label" for="exampleCheck1">yang berlaku</label>
+                      <label for="nama_ruang" class="form-label">Nama Ruang</label>
+                      <input type="text" class="form-control" id="nama_ruang" name="nama_ruang">
                     </div>
                     <button type="submit" name="submit" value="Submit" class="btn btn-primary">Submit</button>
                   </form>
