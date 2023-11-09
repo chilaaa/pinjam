@@ -9,7 +9,7 @@ include 'koneksi.php';
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Modernize Free</title>
+  <title>Dashboard</title>
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
 </head>
@@ -96,6 +96,8 @@ include 'koneksi.php';
       <!--  Header Start -->
       <!--  Header End -->
       <div class="container-fluid">
+      <div class="container-fluid">
+
         <div class="card">
           <div class="card-body">
             <h5 class="card-title fw-semibold mb-4">Tabel Pinjam</h5>

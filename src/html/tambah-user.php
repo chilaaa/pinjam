@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Modernize Free</title>
+  <title>Tambah User</title>
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
 </head>
@@ -38,10 +38,6 @@
                     <input type="password" class="form-control" id="exampleInputPassword1">
                   </div>
                   <a href="./login.html" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Tambah User</a>
-                  <div class="d-flex align-items-center justify-content-center">
-                    <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
-                    <a class="text-primary fw-bold ms-2" href="./authentication-login.html">Sign In</a>
-                  </div>
                 </form>
               </div>
             </div>
