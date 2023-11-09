@@ -185,8 +185,84 @@ include 'koneksi.php';
           </div>
         </div>
       </div>
+      <div class="container-fluid">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Tabel Ruang</h5>
+            <div class="table-responsive">
+              <table class="table text-nowrap mb-0 align-middle">
+                <thead class="text-dark fs-4">
+                  <tr>
+                    <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">id_ruang</h6>
+                    </th>
+                    <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Nama Ruang</h6>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $query = mysqli_query($conn, "SELECT * FROM m_ruang"); ?>
+                  <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+                    <tr>
+                      <td class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0"><?php echo $row['id_ruang'] ?></h6>
+                      </td>
+                      <td class="border-bottom-0">
+                        <h6 class="fw-semibold mb-1"><?php echo $row['nama_ruang'] ?></h6>
+                      </td>
+                      <td class="border-bottom-0">
+                        <a href="form-update-ruang.php?id_ruang=<?php echo $row['id_ruang'] ?>" class="btn btn-primary m-1">Update</a>
+                      </td>
+                    <?php endwhile; ?>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Tabel Unit</h5>
+            <div class="table-responsive">
+              <table class="table text-nowrap mb-0 align-middle">
+                <thead class="text-dark fs-4">
+                  <tr>
+                    <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">id_unit</h6>
+                    </th>
+                    <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Nama Unit</h6>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $query = mysqli_query($conn, "SELECT * FROM m_unit"); ?>
+                  <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+                    <tr>
+                      <td class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0"><?php echo $row['id_unit'] ?></h6>
+                      </td>
+                      <td class="border-bottom-0">
+                        <h6 class="fw-semibold mb-1"><?php echo $row['nama_unit'] ?></h6>
+                      </td>
+                      <td class="border-bottom-0">
+                        <a href="form-update-unit.php?id_unit=<?php echo $row['id_unit'] ?>" class="btn btn-primary m-1">Update</a>
+                      </td>
+                    <?php endwhile; ?>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
 </body>
 
 </html>
