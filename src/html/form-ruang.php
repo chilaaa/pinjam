@@ -84,6 +84,14 @@ if (isset($_POST['submit'])) {
                 <span class="hide-menu">Form Tambah Ruang</span>
               </a>
             </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./form-unit.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-file-description"></i>
+                </span>
+                <span class="hide-menu">Form Tambah Unit</span>
+              </a>
+            </li>
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">AUTH</span>
@@ -119,7 +127,7 @@ if (isset($_POST['submit'])) {
         <div class="container-fluid">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title fw-semibold mb-4">Pinjam-Pinjam</h5>
+              <h5 class="card-title fw-semibold mb-4">Form Tambah Ruang</h5>
               <div class="card">
                 <div class="card-body">
                   <form method="post" enctype="multipart/form-data">

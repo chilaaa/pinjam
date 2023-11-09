@@ -39,7 +39,7 @@ if (isset($_POST['delete'])) {
     $id_pinjam = $_GET['id_pinjam'];
 
     // Pastikan $id_pinjam adalah nilai yang sesuai, dan lakukan operasi DELETE.
-    
+
     // Prepare the DELETE statement
     $querydelete = "DELETE FROM jadwal_pinjam WHERE id_pinjam = '$id_pinjam'";
 
@@ -103,71 +103,79 @@ if (isset($_POST['submit'])) {
     <!--  Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
         <!-- Sidebar Start -->
-    <aside class="left-sidebar">
-      <!-- Sidebar scroll-->
-      <div>
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-          <ul id="sidebarnav">
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Home</span>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./index.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-layout-dashboard"></i>
-                </span>
-                <span class="hide-menu">Dashboard</span>
-              </a>
-            </li>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Forms</span>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./form-pinjam.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-file-description"></i>
-                </span>
-                <span class="hide-menu">Form Pinjam-Pinjam</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./form-ruang.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-file-description"></i>
-                </span>
-                <span class="hide-menu">Form Tambah Ruang</span>
-              </a>
-            </li>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">AUTH</span>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./login.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-login"></i>
-                </span>
-                <span class="hide-menu">Login</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./tambah-user.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-user-plus"></i>
-                </span>
-                <span class="hide-menu">New User</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
-      </div>
-      <!-- End Sidebar scroll-->
-    </aside>
-    <!--  Sidebar End -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div>
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+                    <ul id="sidebarnav">
+                        <li class="nav-small-cap">
+                            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                            <span class="hide-menu">Home</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./index.php" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-layout-dashboard"></i>
+                                </span>
+                                <span class="hide-menu">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-small-cap">
+                            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                            <span class="hide-menu">Forms</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./form-pinjam.php" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-file-description"></i>
+                                </span>
+                                <span class="hide-menu">Form Pinjam-Pinjam</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./form-ruang.php" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-file-description"></i>
+                                </span>
+                                <span class="hide-menu">Form Tambah Ruang</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./form-unit.php" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-file-description"></i>
+                                </span>
+                                <span class="hide-menu">Form Tambah Unit</span>
+                            </a>
+                        </li>
+                        <li class="nav-small-cap">
+                            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                            <span class="hide-menu">AUTH</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./login.php" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-login"></i>
+                                </span>
+                                <span class="hide-menu">Login</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./tambah-user.php" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-user-plus"></i>
+                                </span>
+                                <span class="hide-menu">New User</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!--  Sidebar End -->
         <!--  Main wrapper -->
         <div class="body-wrapper">
             <!--  Header Start -->
@@ -176,7 +184,7 @@ if (isset($_POST['submit'])) {
                 <div class="container-fluid">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title fw-semibold mb-4">Pinjam-Pinjam</h5>
+                            <h5 class="card-title fw-semibold mb-4">Form Update</h5>
                             <div class="card">
                                 <div class="card-body">
                                     <form method="post" enctype="multipart/form-data">
@@ -187,20 +195,27 @@ if (isset($_POST['submit'])) {
                                         <div class="mb-3">
                                             <label for="id_ruang" class="form-label">Ruangan</label>
                                             <select id="id_ruang" name="id_ruang" class="form-control">
-                                                <option value="0001" <?php if ($id_ruang == '0001') echo 'selected'; ?>>Ruang Makan</option>
-                                                <option value="0002" <?php if ($id_ruang == '0002') echo 'selected'; ?>>Ruang Keluarga</option>
-                                                <option value="0003" <?php if ($id_ruang == '0003') echo 'selected'; ?>>Ruang Bermain</option>
-                                                <option value="0004" <?php if ($id_ruang == '0004') echo 'selected'; ?>>Ruang Tidur</option>
+                                                <?php $query = mysqli_query($conn, "SELECT * FROM m_ruang"); ?>
+                                                <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+                                                    <option value="<?php echo $row['id_ruang']; ?>" <?php if ($id_ruang == $row['id_ruang']) echo 'selected'; ?>>
+                                                        <?php echo $row['nama_ruang']; ?>
+                                                    </option>
+                                                <?php endwhile; ?>
                                             </select>
                                         </div>
+
                                         <div class="mb-3">
                                             <label for="id_unit" class="form-label">Unit</label>
                                             <select id="id_unit" name="id_unit" class="form-control">
-                                                <option value="0011" <?php if ($id_unit == '0011') echo 'selected'; ?>>Primary</option>
-                                                <option value="0012" <?php if ($id_unit == '0012') echo 'selected'; ?>>Secondary</option>
-                                                <option value="0013" <?php if ($id_unit == '0013') echo 'selected'; ?>>Tertiary</option>
+                                                <?php $query = mysqli_query($conn, "SELECT * FROM m_unit"); ?>
+                                                <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+                                                    <option value="<?php echo $row['id_unit']; ?>" <?php if ($id_unit == $row['id_unit']) echo 'selected'; ?>>
+                                                        <?php echo $row['nama_unit']; ?>
+                                                    </option>
+                                                <?php endwhile; ?>
                                             </select>
                                         </div>
+
                                         <div class="mb-3">
                                             <label for="tanggal" class="form-label">Tanggal</label>
                                             <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo $tanggal; ?>">

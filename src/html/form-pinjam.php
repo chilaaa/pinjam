@@ -105,6 +105,14 @@ if (isset($_POST['submit'])) {
                 <span class="hide-menu">Form Tambah Ruang</span>
               </a>
             </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./form-unit.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-file-description"></i>
+                </span>
+                <span class="hide-menu">Form Tambah Unit</span>
+              </a>
+            </li>
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">AUTH</span>
@@ -140,7 +148,7 @@ if (isset($_POST['submit'])) {
         <div class="container-fluid">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title fw-semibold mb-4">Pinjam-Pinjam</h5>
+              <h5 class="card-title fw-semibold mb-4">Form Pinjam</h5>
               <div class="card">
                 <div class="card-body">
                   <form method="post" enctype="multipart/form-data">
@@ -148,21 +156,23 @@ if (isset($_POST['submit'])) {
                       <label for="nama_peminjam" class="form-label">Nama Peminjam</label>
                       <input type="text" class="form-control" id="nama_peminjam" name="nama_peminjam">
                     </div>
+
                     <div class="mb-3">
                       <label for="id_ruang" class="form-label">Ruangan</label>
                       <select id="id_ruang" name="id_ruang" class="form-control">
-                        <option value="0001">Ruang Makan</option>
-                        <option value="0002">Ruang Keluarga</option>
-                        <option value="0003">Ruang Bermain</option>
-                        <option value="0004">Ruang Tidur</option>
+                        <?php $query = mysqli_query($conn, "SELECT * FROM m_ruang"); ?>
+                        <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+                          <option value="<?php echo $row['id_ruang'] ?>"><?php echo $row['nama_ruang'] ?></option>
+                        <?php endwhile; ?>
                       </select>
                     </div>
                     <div class="mb-3">
                       <label for="id_unit" class="form-label">Unit</label>
                       <select id="id_unit" name="id_unit" class="form-control">
-                        <option value="0011">Primary</option>
-                        <option value="0012">Secondary</option>
-                        <option value="0013">Tertiary</option>
+                      <?php $query = mysqli_query($conn, "SELECT * FROM m_unit"); ?>
+                        <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+                          <option value="<?php echo $row['id_unit'] ?>"><?php echo $row['nama_unit'] ?></option>
+                        <?php endwhile; ?>
                       </select>
                     </div>
                     <div class="mb-3">
