@@ -1,5 +1,15 @@
 <?php
-require 'koneksi.php';
+session_start();
+include 'koneksi.php';
+
+// Pastikan pengguna sudah login sebelum mengakses halaman dashboard
+if (!isset($_SESSION['username'])) {
+  header("Location: login.php");
+  exit();
+}
+
+// Ambil nama_user dari sesi
+$nama_user = $_SESSION['nama_user'];
 
 if (isset($_POST['old_token']) && isset($_POST['new_token'])) {
     $old_token = $_POST['old_token'];

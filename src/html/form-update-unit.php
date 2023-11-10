@@ -1,14 +1,15 @@
 <?php
-require 'koneksi.php';
 session_start();
-// if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
-//     $currentDomain = $_SERVER['HTTP_HOST'];
-//     $newBaseDirectory = "https://" . $currentDomain;
-//     $baseDirectory = $newBaseDirectory;
-//     $targetUrl = "$baseDirectory/login.php";
-//     header("Location: $targetUrl");
-//     exit();
-// }
+include 'koneksi.php';
+
+// Pastikan pengguna sudah login sebelum mengakses halaman dashboard
+if (!isset($_SESSION['username'])) {
+  header("Location: login.php");
+  exit();
+}
+
+// Ambil nama_user dari sesi
+$nama_user = $_SESSION['nama_user'];
 
 if (isset($_GET['id_unit'])) {
     $id_unit = $_GET['id_unit'];
@@ -168,6 +169,7 @@ if (isset($_POST['submit'])) {
             <!--  Header End -->
             <div class="container-fluid">
                 <div class="container-fluid">
+                <a href="logout.php" class="btn btn-primary py-8 fs-4 mb-4 rounded-2"><?php echo $nama_user; ?></a>
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title fw-semibold mb-4">Form Update Unit</h5>

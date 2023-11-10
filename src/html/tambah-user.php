@@ -1,40 +1,35 @@
 <?php
 session_start();
-
-require 'koneksi.php';
+include 'koneksi.php';
 
 if (isset($_POST['submit'])) {
-    $token = $_POST['token'];
-    $stmt = $conn->prepare("SELECT * FROM token WHERE token = ?");
-    $stmt->bind_param("s", $token);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $_SESSION['authenticated'] = true;
-        echo "token benar";
+  $token = $_POST['token'];
+  $stmt = $conn->prepare("SELECT * FROM token WHERE token = ?");
+  $stmt->bind_param("s", $token);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+    $nama_user = $_POST['nama_user'];
+    $username = $_POST['username'];
+    $password = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+
+    // Gunakan prepared statement untuk menghindari SQL Injection
+    $stmtInsert = $conn->prepare("INSERT INTO m_user (nama_user, username, pass) VALUES (?, ?, ?)");
+    $stmtInsert->bind_param("sss", $nama_user, $username, $password);
+    $stmtInsert->execute();
+
+    if ($stmtInsert) {
+      // Eksekusi berhasil, arahkan ke URL yang diinginkan
+      $baseDirectory = "http://localhost/modern/pinjam/src/html/login.php";
+      header("Location: $baseDirectory");
     } else {
-        echo "Password (Token) salah. Verifikasi gagal!";
+      echo '<script>alert("Terjadi Kesalahan");</script>';
     }
-}
-
-if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true) {
-  $username = $_POST['username'];
-  $pass = $_POST['pass'];
-  $nama_user = $_POST['nama_user'];
-
-  $query = "INSERT INTO m_user (username, pass, nama_user) 
-            VALUES ('$username', '$pass', '$nama_user')";
-
-  $result = mysqli_query($conn, $query);
-  if ($result) {
-    // Eksekusi berhasil, arahkan ke URL yang diinginkan
-    $baseDirectory = "http://localhost/modern/pinjam/src/html/login.php";
-    header("Location: $baseDirectory");
-  } else {
-    echo '<script>alert("Terjadi Kesalahan");</script>';
   }
 }
 ?>
+
 
 
 <!doctype html>
