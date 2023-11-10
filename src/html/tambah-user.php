@@ -1,3 +1,42 @@
+<?php
+session_start();
+
+require 'koneksi.php';
+
+if (isset($_POST['submit'])) {
+    $token = $_POST['token'];
+    $stmt = $conn->prepare("SELECT * FROM token WHERE token = ?");
+    $stmt->bind_param("s", $token);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $_SESSION['authenticated'] = true;
+        echo "token benar";
+    } else {
+        echo "Password (Token) salah. Verifikasi gagal!";
+    }
+}
+
+if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] == true) {
+  $username = $_POST['username'];
+  $pass = $_POST['pass'];
+  $nama_user = $_POST['nama_user'];
+
+  $query = "INSERT INTO m_user (username, pass, nama_user) 
+            VALUES ('$username', '$pass', '$nama_user')";
+
+  $result = mysqli_query($conn, $query);
+  if ($result) {
+    // Eksekusi berhasil, arahkan ke URL yang diinginkan
+    $baseDirectory = "http://localhost/modern/pinjam/src/html/login.php";
+    header("Location: $baseDirectory");
+  } else {
+    echo '<script>alert("Terjadi Kesalahan");</script>';
+  }
+}
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -11,33 +50,32 @@
 
 <body>
   <!--  Body Wrapper -->
-  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-    data-sidebar-position="fixed" data-header-position="fixed">
-    <div
-      class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+    <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
       <div class="d-flex align-items-center justify-content-center w-100">
         <div class="row justify-content-center w-100">
           <div class="col-md-8 col-lg-6 col-xxl-3">
             <div class="card mb-0">
               <div class="card-body">
-                <!-- <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                  <img src="../assets/images/logos/dark-logo.svg" width="180" alt="">
-                </a> -->
                 <h5 class="text-center card-title fw-semibold mb-4">Tambah User</h5>
-                <form>
+                <form action="tambah-user.php" method="post">
                   <div class="mb-3">
-                    <label for="exampleInputtext1" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                    <label for="nama_user" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="nama_user" name="nama_user" aria-describedby="textHelp">
                   </div>
                   <div class="mb-3">
-                    <label for="exampleInputtext2" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="exampleInputtext2" aria-describedby="textHelp">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" aria-describedby="textHelp">
                   </div>
-                  <div class="mb-4">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
+                  <div class="mb-3">
+                    <label for="pass" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="pass" name="pass">
                   </div>
-                  <a href="./login.html" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Tambah User</a>
+                  <div class="mb-3">
+                    <label for="token" class="form-label">Token</label>
+                    <input type="text" class="form-control" id="token" name="token">
+                  </div>
+                  <button type="submit" name="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Tambah User</button>
                 </form>
               </div>
             </div>

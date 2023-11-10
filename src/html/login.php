@@ -1,3 +1,40 @@
+<?php
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+    $username = $_POST['username'];
+    $password = $_POST['pass'];
+
+    // Perform database query to check the username and password
+    $query = "SELECT * FROM m_user WHERE username = ? LIMIT 1";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['pass'])) {
+            // Password is correct, log in the user
+            $_SESSION['authenticated'] = true;
+            // You can store additional user data in the session if needed
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['nama_user'] = $user['nama_user'];
+          echo "berhasil";
+            $baseDirectory = "http://localhost/modern/pinjam/src/html/";
+            header("Location: $baseDirectory");
+            exit();
+        } else {
+            echo "Incorrect password. Please try again.";
+        }
+    } else {
+        echo "Username not found. Please try again.";
+    }
+}
+
+require 'koneksi.php';
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -20,31 +57,17 @@
           <div class="col-md-8 col-lg-6 col-xxl-3">
             <div class="card mb-0">
               <div class="card-body">
-                <!-- <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                  <img src="../assets/images/logos/dark-logo.svg" width="180" alt="">
-                </a> -->
                 <h5 class="text-center card-title fw-semibold mb-4">Login</h5>
                 <form>
                   <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Username</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username">
                   </div>
                   <div class="mb-4">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
+                    <label for="pass" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="pass" name="pass">
                   </div>
-                  <!-- <div class="d-flex align-items-center justify-content-between mb-4">
-                    <div class="form-check">
-                      <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
-                      <label class="form-check-label text-dark" for="flexCheckChecked">
-                        Remeber this Device
-                      </label>
-                    </div>
-                  </div> -->
-                  <a href="./index.html" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign In</a>
-                  <!-- <div class="d-flex align-items-center justify-content-center">
-                    <a class="text-primary fw-bold ms-2" href="./authentication-register.html">Create an account</a>
-                  </div> -->
+                  <button type="submit" name="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Login</button>
                 </form>
               </div>
             </div>

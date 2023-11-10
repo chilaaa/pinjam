@@ -93,9 +93,11 @@ include 'koneksi.php';
     <!--  Sidebar End -->
     <!--  Main wrapper -->
     <div class="body-wrapper">
+      
       <!--  Header Start -->
       <!--  Header End -->
       <div class="container-fluid">
+        <a href="logout.php" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Logout</a>
       <div class="container-fluid">
 
         <div class="card">
