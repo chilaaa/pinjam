@@ -3,30 +3,22 @@ session_start();
 include 'koneksi.php';
 
 if (isset($_POST['submit'])) {
-  $token = $_POST['token'];
-  $stmt = $conn->prepare("SELECT * FROM token WHERE token = ?");
-  $stmt->bind_param("s", $token);
-  $stmt->execute();
-  $result = $stmt->get_result();
+  $nama_user = $_POST['nama_user'];
+  $username = $_POST['username'];
+  $password = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
-  if ($result->num_rows > 0) {
-    $nama_user = $_POST['nama_user'];
-    $username = $_POST['username'];
-    $password = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+  $query = "INSERT INTO m_user (username, pass, nama_user) 
+            VALUES ('$username', '$password', '$nama_user')";
 
-    // Gunakan prepared statement untuk menghindari SQL Injection
-    $stmtInsert = $conn->prepare("INSERT INTO m_user (nama_user, username, pass) VALUES (?, ?, ?)");
-    $stmtInsert->bind_param("sss", $nama_user, $username, $password);
-    $stmtInsert->execute();
 
-    if ($stmtInsert) {
-      // Eksekusi berhasil, arahkan ke URL yang diinginkan
-      $baseDirectory = "http://localhost/modern/pinjam/src/html/login.php";
-      header("Location: $baseDirectory");
-    } else {
-      echo '<script>alert("Terjadi Kesalahan");</script>';
-    }
-  }
+$result = mysqli_query($conn, $query);
+if ($result) {
+  // Eksekusi berhasil, arahkan ke URL yang diinginkan
+  $baseDirectory = "http://localhost/modern/pinjam/src/html/";
+  header("Location: $baseDirectory");
+} else {
+  echo '<script>alert("Terjadi Kesalahan");</script>';
+}
 }
 ?>
 
@@ -66,10 +58,10 @@ if (isset($_POST['submit'])) {
                     <label for="pass" class="form-label">Password</label>
                     <input type="password" class="form-control" id="pass" name="pass">
                   </div>
-                  <div class="mb-3">
+                  <!-- <div class="mb-3">
                     <label for="token" class="form-label">Token</label>
                     <input type="text" class="form-control" id="token" name="token">
-                  </div>
+                  </div> -->
                   <button type="submit" name="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Tambah User</button>
                 </form>
               </div>

@@ -12,22 +12,57 @@ if (!isset($_SESSION['username'])) {
 $nama_user = $_SESSION['nama_user'];
 
 if (isset($_POST['submit'])) {
-  $id_ruang = $_POST['id_ruang'];
   $nama_ruang = $_POST['nama_ruang'];
 
-  $query = "INSERT INTO m_ruang (id_ruang, nama_ruang) 
-            VALUES ('$id_ruang', '$nama_ruang')";
+  $query = "INSERT INTO m_ruang (nama_ruang) VALUES ('$nama_ruang')";
+
 
   $result = mysqli_query($conn, $query);
   if ($result) {
     // Eksekusi berhasil, arahkan ke URL yang diinginkan
+    $baseDirectory = "http://localhost/modern/pinjam/src/html/form-ruang.php";
+    header("Location: $baseDirectory");
+  } else {
+    echo '<script>alert("Terjadi Kesalahan: ' . mysqli_error($conn) . '");</script>';
+  }
+}
+
+if (isset($_GET['id_ruang'])) {
+  $id_ruang = $_GET['id_ruang'];
+
+  $query = "SELECT * FROM m_ruang WHERE id_ruang = '$id_ruang'";
+  $result = mysqli_query($conn, $query);
+
+  // Cek apakah data kegiatan ditemukan
+  if (mysqli_num_rows($result) > 0) {
+    $m_ruang = mysqli_fetch_assoc($result);
+    // Ambil nilai dari setiap kolom
+    $id_ruang = $m_ruang['id_ruang'];
+    $nama_ruang = $m_ruang['nama_ruang'];
+  } else {
+    // echo '<script>alert("Data kegiatan tidak ditemukan.");</script>';
     $baseDirectory = "http://localhost/modern/pinjam/src/html/";
+    header("Location: $baseDirectory");
+    exit();
+  }
+}
+
+if (isset($_POST['update'])) {
+  $nama_ruang = $_POST['nama_ruang'];
+
+  $queryupdate = "UPDATE m_ruang SET 
+    nama_ruang = '$nama_ruang'
+    WHERE id_ruang = '$id_ruang'";
+
+  $resultupdate = mysqli_query($conn, $queryupdate);
+  if ($resultupdate) {
+    // Eksekusi berhasil, arahkan ke URL yang diinginkan
+    $baseDirectory = "http://localhost/modern/pinjam/src/html/form-ruang.php";
     header("Location: $baseDirectory");
   } else {
     echo '<script>alert("Terjadi Kesalahan");</script>';
   }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +74,12 @@ if (isset($_POST['submit'])) {
   <title>Form Tambah Ruang</title>
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 
 <body>
@@ -65,22 +106,14 @@ if (isset($_POST['submit'])) {
             </li>
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Forms</span>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./form-pinjam.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-file-description"></i>
-                </span>
-                <span class="hide-menu">Form Pinjam-Pinjam</span>
-              </a>
+              <span class="hide-menu">Data Master</span>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="./form-ruang.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-file-description"></i>
                 </span>
-                <span class="hide-menu">Form Tambah Ruang</span>
+                <span class="hide-menu">Ruang</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -88,29 +121,30 @@ if (isset($_POST['submit'])) {
                 <span>
                   <i class="ti ti-file-description"></i>
                 </span>
-                <span class="hide-menu">Form Tambah Unit</span>
+                <span class="hide-menu">Unit</span>
               </a>
             </li>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">AUTH</span>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./login.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-login"></i>
-                </span>
-                <span class="hide-menu">Login</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
+            <!-- <li class="sidebar-item">
               <a class="sidebar-link" href="./tambah-user.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-user-plus"></i>
                 </span>
                 <span class="hide-menu">New User</span>
               </a>
+            </li> -->
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">AUTH</span>
             </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./logout.php" aria-expanded="false">
+                <span>
+                  <i class="ti ti-logout"></i>
+                </span>
+                <span class="hide-menu">Logout</span>
+              </a>
+            </li>
+
           </ul>
         </nav>
         <!-- End Sidebar navigation -->
@@ -123,30 +157,113 @@ if (isset($_POST['submit'])) {
       <!--  Header Start -->
       <!--  Header End -->
       <div class="container-fluid">
-        <div class="container-fluid">
-        <a href="logout.php" class="btn btn-primary py-8 fs-4 mb-4 rounded-2"><?php echo $nama_user; ?></a>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title fw-semibold mb-4">Form Tambah Ruang</h5>
-              <div class="card">
-                <div class="card-body">
-                  <form method="post" enctype="multipart/form-data">
-                    <div class="mb-3">
-                      <label for="id_ruang" class="form-label">id_ruang</label>
-                      <input type="text" class="form-control" id="id_ruang" name="id_ruang">
-                    </div>
-                    <div class="mb-3">
-                      <label for="nama_ruang" class="form-label">Nama Ruang</label>
-                      <input type="text" class="form-control" id="nama_ruang" name="nama_ruang">
-                    </div>
-                    <button type="submit" name="submit" value="Submit" class="btn btn-primary">Submit</button>
-                  </form>
-                </div>
+        <button type="button" class="btn btn-primary py-8 fs-4 mb-4 rounded-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Tambah
+        </button>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Ruang</h5>
+            <div class="table-responsive">
+              <div class="table-container" id="tabelRuang">
+                <!-- <div class="mb-3">
+                    <input class="form-control" type="text" id="ruangSearch" placeholder="Search Ruang">
+                  </div> -->
+                <table id="pinjam" class="display" style="width:100%">
+                  <thead class="text-dark fs-4">
+                    <tr>
+                      <!-- <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">id_ruang</h6>
+                        </th> -->
+                      <th class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0">Nama Ruang</h6>
+                      </th>
+                      <th class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0">#</h6>
+                      </th>
+                      <th class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0">#</h6>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $query = mysqli_query($conn, "SELECT * FROM m_ruang"); ?>
+                    <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+                      <tr>
+                        <!-- <td class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0"></h6>
+                          </td> -->
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-1"><?php echo $row['nama_ruang'] ?></h6>
+                        </td>
+                        <td class="border-bottom-0">
+                          <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id_ruang']; ?>">
+                            Update
+                          </button>
+                        </td>
+                        <td class="border-bottom-0">
+                          <a href="delete.php?delete_ruang=<?php echo $row['id_ruang']; ?>" class="btn btn-danger">Delete</a>
+                        </td>
+                      <?php endwhile; ?>
+                      </tr>
+                  </tbody>
+                </table>
+                <script>
+                  $(document).ready(function() {
+                    $('#pinjam').DataTable();
+                  });
+                </script>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Ruang</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                  <label for="nama_ruang" class="form-label">Nama Ruang</label>
+                  <input type="text" class="form-control" id="nama_ruang" name="nama_ruang">
+                </div>
+                <button type="submit" name="submit" value="Submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Submit</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?php $query = mysqli_query($conn, "SELECT * FROM m_ruang"); ?>
+                      <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+      <div class="modal fade" id="updateModal<?php echo $row['id_ruang']; ?>" tabindex="-1" aria-labelledby="updateModalLabel<?php echo $row['id_ruang']; ?>" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Ruang</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="post" action="form-ruang.php" enctype="multipart/form-data">
+                <div class="mb-3">
+                  <label for="nama_ruang" class="form-label">Nama Ruang</label>
+                  <input type="text" class="form-control" id="nama_ruang" name="nama_ruang" value="<?php echo $row['nama_ruang']; ?>">
+                </div>
+                <button type="submit" name="update" value="update" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Update</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?php endwhile; ?>
 </body>
 
 </html>

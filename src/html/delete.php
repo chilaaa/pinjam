@@ -24,7 +24,7 @@ if (isset($_GET['delete_ruang'])) {
     $resultdelete = mysqli_query($conn, $querydelete);
 
     if ($resultdelete) {
-        $baseDirectory = "http://localhost/modern/pinjam/src/html/";
+        $baseDirectory = "http://localhost/modern/pinjam/src/html/form-ruang.php";
         header("Location: $baseDirectory");
     } else {
         echo '<script>alert("Terjadi Kesalahan saat menghapus data kegiatan.");</script>';
@@ -38,7 +38,7 @@ if (isset($_GET['delete_unit'])) {
     $resultdelete = mysqli_query($conn, $querydelete);
 
   if ($resultdelete) {
-      $baseDirectory = "http://localhost/modern/pinjam/src/html/";
+      $baseDirectory = "http://localhost/modern/pinjam/src/html/form-unit.php";
       header("Location: $baseDirectory");
   } else {
       echo '<script>alert("Terjadi Kesalahan saat menghapus data kegiatan.");</script>';
