@@ -233,12 +233,12 @@ if (isset($_POST['submit'])) {
                                             <label for="keterangan" class="form-label">Keterangan</label>
                                             <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?php echo $keterangan; ?>">
                                         </div>
-                                        <div class="mb-3 form-check">
+                                        <!-- <div class="mb-3 form-check">
                                             <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                             <label class="form-check-label" for="exampleCheck1">Saya sudah menyetujui</label>
                                             <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D">persyaratan dan ketentuan</a>
                                             <label class="form-check-label" for="exampleCheck1">yang berlaku</label>
-                                        </div>
+                                        </div> -->
                                         <button type="submit" name="submit" value="Submit" class="btn btn-primary">Submit</button>
                                         <button type="submit" name="delete" value="Delete" class="btn btn-danger">Delete</button>
                                     </form>
