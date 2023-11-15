@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
     if (password_verify($password, $row['pass'])) {
       $_SESSION['username'] = $row['username'];
       $_SESSION['nama_user'] = $row['nama_user'];
-      header("Location: index.php");
+      header("Location: dashboard");
     } else {
       echo "<script>alert('Email atau password Anda salah. Silahkan coba lagi!')</script>";
     }
@@ -68,9 +68,6 @@ if (isset($_POST['submit'])) {
                     <input type="password" class="form-control" id="pass" name="pass">
                   </div>
                   <button type="submit" name="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Login</button>
-                  <div class="d-flex align-items-center justify-content-center">
-                    <a class="text-primary fw-bold ms-2" href="./tambah-user.php">Tambah User</a>
-                  </div>
                 </form>
               </div>
             </div>

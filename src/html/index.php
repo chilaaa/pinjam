@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 
 session_start();
@@ -14,6 +14,12 @@ if (!isset($_SESSION['username'])) {
 
 // Ambil nama_user dari sesi
 $nama_user = $_SESSION['nama_user'];
+
+$nama_peminjam = ""; // Initialize with an empty string or the appropriate default value
+$keterangan = ""; // Initialize with an empty string or the appropriate default value
+$id_ruang = ""; // Initialize with an appropriate default value or retrieve it from a source
+$id_unit = ""; // Initialize with an appropriate default value or retrieve it from a source
+
 
 if (isset($_POST['submit'])) {
 
@@ -31,7 +37,7 @@ if (isset($_POST['submit'])) {
   $result = mysqli_query($conn, $query);
   if ($result) {
     // Eksekusi berhasil, arahkan ke URL yang diinginkan
-    $baseDirectory = "http://localhost/modern/pinjam/src/html/";
+    $baseDirectory = "http://localhost/modern/pinjam/src/html/dashboard";
     header("Location: $baseDirectory");
   } else {
     echo '<script>alert("Terjadi Kesalahan: ' . mysqli_error($conn) . '");</script>';
@@ -61,11 +67,30 @@ if (isset($_POST['update'])) {
   $resultupdate = mysqli_query($conn, $queryupdate);
   if ($resultupdate) {
     // Eksekusi berhasil, arahkan ke URL yang diinginkan
-    $baseDirectory = "http://localhost/modern/pinjam/src/html/";
+    $baseDirectory = "http://localhost/modern/pinjam/src/html/dashboard";
     header("Location: $baseDirectory");
     exit();  // Add exit() to stop further execution
   } else {
     echo '<script>alert("Terjadi Kesalahan: ' . mysqli_error($conn) . '");</script>';
+  }
+}
+
+if (isset($_POST['tambah'])) {
+  $nama_user = $_POST['nama_user'];
+  $username = $_POST['username'];
+  $password = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+
+  $query = "INSERT INTO m_user (username, pass, nama_user) 
+            VALUES ('$username', '$password', '$nama_user')";
+
+
+  $result = mysqli_query($conn, $query);
+  if ($result) {
+    // Eksekusi berhasil, arahkan ke URL yang diinginkan
+    $baseDirectory = "http://localhost/modern/pinjam/src/html/dashboard";
+    header("Location: $baseDirectory");
+  } else {
+    echo '<script>alert("Terjadi Kesalahan");</script>';
   }
 }
 ?>
@@ -102,7 +127,7 @@ if (isset($_POST['update'])) {
               <span class="hide-menu">Home</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./index.php" aria-expanded="false">
+              <a class="sidebar-link" href="./dashboard" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
@@ -120,7 +145,7 @@ if (isset($_POST['update'])) {
               <span class="hide-menu">Data Master</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./form-ruang.php" aria-expanded="false">
+              <a class="sidebar-link" href="./ruang" aria-expanded="false">
                 <span>
                   <i class="ti ti-file-description"></i>
                 </span>
@@ -128,7 +153,7 @@ if (isset($_POST['update'])) {
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./form-unit.php" aria-expanded="false">
+              <a class="sidebar-link" href="./unit" aria-expanded="false">
                 <span>
                   <i class="ti ti-file-description"></i>
                 </span>
@@ -390,7 +415,7 @@ if (isset($_POST['update'])) {
                   <label for="keterangan" class="form-label">Keterangan</label>
                   <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?php echo $keterangan; ?>">
                 </div>
-                <button type="submit" name="submit" value="Submit" class="btn btn-primary">Submit</button>
+                <button type="submit" name="submit" value="Submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Submit</button>
               </form>
             </div>
             <div class="modal-footer">
@@ -408,7 +433,7 @@ if (isset($_POST['update'])) {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form action="tambah-user.php" method="post">
+              <form action="" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                   <label for="nama_user" class="form-label">Name</label>
                   <input type="text" class="form-control" id="nama_user" name="nama_user" aria-describedby="textHelp">
@@ -425,7 +450,7 @@ if (isset($_POST['update'])) {
                     <label for="token" class="form-label">Token</label>
                     <input type="text" class="form-control" id="token" name="token">
                   </div> -->
-                <button type="submit" name="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Tambah User</button>
+                <button type="submit" name="tambah" value="tambah" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Tambah User</button>
               </form>
             </div>
             <div class="modal-footer">

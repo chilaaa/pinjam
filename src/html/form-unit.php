@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($conn, $query);
     if ($result) {
         // Eksekusi berhasil, arahkan ke URL yang diinginkan
-        $baseDirectory = "http://localhost/modern/pinjam/src/html/form-unit.php";
+        $baseDirectory = "http://localhost/modern/pinjam/src/html/unit";
         header("Location: $baseDirectory");
     } else {
         echo '<script>alert("Terjadi Kesalahan: ' . mysqli_error($conn) . '");</script>';
@@ -30,22 +30,41 @@ if (isset($_POST['submit'])) {
 if (isset($_POST['update'])) {
     $id_unit = $_POST['id_unit'];
     $nama_unit = $_POST['nama_unit'];
-  
+
     $queryupdate = "UPDATE m_unit SET 
         nama_unit = '$nama_unit'
         WHERE id_unit = '$id_unit'";
-  
+
     $resultupdate = mysqli_query($conn, $queryupdate);
     if ($resultupdate) {
-      // Eksekusi berhasil, arahkan ke URL yang diinginkan
-      $baseDirectory = "http://localhost/modern/pinjam/src/html/form-unit.php";
-      header("Location: $baseDirectory");
-      exit();  // Add exit() to stop further execution
+        // Eksekusi berhasil, arahkan ke URL yang diinginkan
+        $baseDirectory = "http://localhost/modern/pinjam/src/html/unit";
+        header("Location: $baseDirectory");
+        exit();  // Add exit() to stop further execution
     } else {
-      echo '<script>alert("Terjadi Kesalahan: ' . mysqli_error($conn) . '");</script>';
+        echo '<script>alert("Terjadi Kesalahan: ' . mysqli_error($conn) . '");</script>';
     }
-  }
+}
 
+
+if (isset($_POST['tambah'])) {
+    $nama_user = $_POST['nama_user'];
+    $username = $_POST['username'];
+    $password = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+
+    $query = "INSERT INTO m_user (username, pass, nama_user) 
+              VALUES ('$username', '$password', '$nama_user')";
+
+
+    $result = mysqli_query($conn, $query);
+    if ($result) {
+        // Eksekusi berhasil, arahkan ke URL yang diinginkan
+        $baseDirectory = "http://localhost/modern/pinjam/src/html/dashboard";
+        header("Location: $baseDirectory");
+    } else {
+        echo '<script>alert("Terjadi Kesalahan");</script>';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -80,7 +99,7 @@ if (isset($_POST['update'])) {
                             <span class="hide-menu">Home</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./index.php" aria-expanded="false">
+                            <a class="sidebar-link" href="./dashboard" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-layout-dashboard"></i>
                                 </span>
@@ -98,7 +117,7 @@ if (isset($_POST['update'])) {
                             <span class="hide-menu">Data Master</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./form-ruang.php" aria-expanded="false">
+                            <a class="sidebar-link" href="./ruang" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-file-description"></i>
                                 </span>
@@ -106,11 +125,19 @@ if (isset($_POST['update'])) {
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./form-unit.php" aria-expanded="false">
+                            <a class="sidebar-link" href="./unit" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-file-description"></i>
                                 </span>
                                 <span class="hide-menu">Unit</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" aria-expanded="false" data-bs-toggle="modal" data-bs-target="#tambahuser">
+                                <span>
+                                    <i class="ti ti-user-plus"></i>
+                                </span>
+                                <span class="hide-menu">New User</span>
                             </a>
                         </li>
                         <!-- <li class="sidebar-item">
@@ -245,6 +272,40 @@ if (isset($_POST['update'])) {
                     </div>
                 </div>
             <?php endwhile; ?>
+            <div class="modal fade" id="tambahuser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah User</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="nama_user" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="nama_user" name="nama_user" aria-describedby="textHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" aria-describedby="textHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="pass" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="pass" name="pass">
+                                </div>
+                                <!-- <div class="mb-3">
+                    <label for="token" class="form-label">Token</label>
+                    <input type="text" class="form-control" id="token" name="token">
+                  </div> -->
+                                <button type="submit" name="tambah" value="tambah" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Tambah User</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </body>
 
 </html>

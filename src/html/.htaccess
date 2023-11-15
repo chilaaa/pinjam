@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteBase /modern/pinjam/src/html/
+
+# Redirect index.php to dashboard
+RewriteRule ^dashboard$ index.php [L]
+
+# Redirect form-ruang.php to ruang
+RewriteRule ^ruang$ form-ruang.php [L]
+
+# Redirect form-unit.php to unit
+RewriteRule ^unit$ form-unit.php [L]
