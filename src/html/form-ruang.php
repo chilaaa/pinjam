@@ -48,21 +48,25 @@ if (isset($_GET['id_ruang'])) {
 }
 
 if (isset($_POST['update'])) {
+  $id_ruang = $_POST['id_ruang'];
   $nama_ruang = $_POST['nama_ruang'];
 
   $queryupdate = "UPDATE m_ruang SET 
-    nama_ruang = '$nama_ruang'
-    WHERE id_ruang = '$id_ruang'";
+      nama_ruang = '$nama_ruang'
+      WHERE id_ruang = '$id_ruang'";
 
   $resultupdate = mysqli_query($conn, $queryupdate);
   if ($resultupdate) {
     // Eksekusi berhasil, arahkan ke URL yang diinginkan
     $baseDirectory = "http://localhost/modern/pinjam/src/html/form-ruang.php";
     header("Location: $baseDirectory");
+    exit();  // Add exit() to stop further execution
   } else {
-    echo '<script>alert("Terjadi Kesalahan");</script>';
+    echo '<script>alert("Terjadi Kesalahan: ' . mysqli_error($conn) . '");</script>';
   }
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -240,29 +244,30 @@ if (isset($_POST['update'])) {
         </div>
       </div>
       <?php $query = mysqli_query($conn, "SELECT * FROM m_ruang"); ?>
-                      <?php while ($row = mysqli_fetch_assoc($query)) : ?>
-      <div class="modal fade" id="updateModal<?php echo $row['id_ruang']; ?>" tabindex="-1" aria-labelledby="updateModalLabel<?php echo $row['id_ruang']; ?>" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Ruang</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form method="post" action="form-ruang.php" enctype="multipart/form-data">
-                <div class="mb-3">
-                  <label for="nama_ruang" class="form-label">Nama Ruang</label>
-                  <input type="text" class="form-control" id="nama_ruang" name="nama_ruang" value="<?php echo $row['nama_ruang']; ?>">
-                </div>
-                <button type="submit" name="update" value="update" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Update</button>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+        <div class="modal fade" id="updateModal<?php echo $row['id_ruang']; ?>" tabindex="-1" aria-labelledby="updateModalLabel<?php echo $row['id_ruang']; ?>" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Ruang</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form method="post" action="" enctype="multipart/form-data">
+                  <input type="hidden" name="id_ruang" value="<?php echo $row['id_ruang']; ?>">
+                  <div class="mb-3">
+                    <label for="nama_ruang" class="form-label">Nama Ruang</label>
+                    <input type="text" class="form-control" id="nama_ruang" name="nama_ruang" value="<?php echo $row['nama_ruang']; ?>">
+                  </div>
+                  <button type="submit" name="update" value="update" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Update</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       <?php endwhile; ?>
 </body>
 

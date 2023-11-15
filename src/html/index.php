@@ -1,4 +1,8 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
 session_start();
 include 'koneksi.php';
 
@@ -24,12 +28,42 @@ if (isset($_POST['submit'])) {
   $query = "INSERT INTO jadwal_pinjam (tanggal, jam_awal, jam_akhir, nama_peminjam, keterangan, id_ruang, id_unit) 
             VALUES ('$tanggal', '$jam_awal', '$jam_akhir', '$nama_peminjam', '$keterangan', '$id_ruang', '$id_unit')";
 
-
   $result = mysqli_query($conn, $query);
   if ($result) {
     // Eksekusi berhasil, arahkan ke URL yang diinginkan
     $baseDirectory = "http://localhost/modern/pinjam/src/html/";
     header("Location: $baseDirectory");
+  } else {
+    echo '<script>alert("Terjadi Kesalahan: ' . mysqli_error($conn) . '");</script>';
+  }
+}
+
+if (isset($_POST['update'])) {
+  $id_pinjam = $_POST['id_pinjam'];
+  $tanggal = $_POST['tanggal'];
+  $jam_awal = $_POST['jam_awal'];
+  $jam_akhir = $_POST['jam_akhir'];
+  $nama_peminjam = $_POST['nama_peminjam'];
+  $keterangan = $_POST['keterangan'];
+  $id_ruang = $_POST['id_ruang'];
+  $id_unit = $_POST['id_unit'];
+
+  $queryupdate = "UPDATE jadwal_pinjam SET 
+  tanggal = '$tanggal',
+  jam_awal = '$jam_awal',
+  jam_akhir = '$jam_akhir',
+  nama_peminjam = '$nama_peminjam',
+  keterangan = '$keterangan',
+  id_ruang = '$id_ruang',
+  id_unit = '$id_unit'
+  WHERE id_pinjam = '$id_pinjam'";
+
+  $resultupdate = mysqli_query($conn, $queryupdate);
+  if ($resultupdate) {
+    // Eksekusi berhasil, arahkan ke URL yang diinginkan
+    $baseDirectory = "http://localhost/modern/pinjam/src/html/";
+    header("Location: $baseDirectory");
+    exit();  // Add exit() to stop further execution
   } else {
     echo '<script>alert("Terjadi Kesalahan: ' . mysqli_error($conn) . '");</script>';
   }
@@ -198,7 +232,7 @@ if (isset($_POST['submit'])) {
                             $ruangan_data = mysqli_fetch_assoc($ruangan_query);
                             $ruangan_nama = $ruangan_data['nama_ruang'];
                             echo '<h6 class="fw-semibold mb-1">' . $ruangan_nama . '</h6>';
-                            echo '<span class="fw-normal">' . $row['id_ruang'] . '</span>';
+                            // echo '<span class="fw-normal">' . $row['id_ruang'] . '</span>';
                             ?>
                           </td>
 
@@ -209,7 +243,7 @@ if (isset($_POST['submit'])) {
                             $unit_data = mysqli_fetch_assoc($unit_query);
                             $unit_nama = $unit_data['nama_unit'];
                             echo '<h6 class="fw-semibold mb-1">' . $unit_nama . '</h6>';
-                            echo '<span class="fw-normal">' . $row['id_unit'] . '</span>';
+                            // echo '<span class="fw-normal">' . $row['id_unit'] . '</span>';
                             ?>
                           </td>
 
@@ -220,7 +254,9 @@ if (isset($_POST['submit'])) {
                             <h6 class="fw-semibold mb-1"><?php echo $row['keterangan'] ?></h6>
                           </td>
                           <td class="border-bottom-0">
-                            <a href="form-update.php?id_pinjam=<?php echo $row['id_pinjam'] ?>" class="btn btn-primary m-1">Update</a>
+                            <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id_pinjam']; ?>">
+                              Update
+                            </button>
                           </td>
                           <td class="border-bottom-0">
                             <a href="delete.php?delete_pinjam=<?php echo $row['id_pinjam']; ?>" class="btn btn-danger">Delete</a>
@@ -241,59 +277,120 @@ if (isset($_POST['submit'])) {
           </div>
         </div>
       </div>
+      <?php $query = mysqli_query($conn, "SELECT * FROM jadwal_pinjam"); ?>
+      <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+        <div class="modal fade" id="updateModal<?php echo $row['id_pinjam']; ?>" tabindex="-1" aria-labelledby="updateModalLabel<?php echo $row['id_pinjam']; ?>" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Update</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                  <input type="hidden" name="id_pinjam" value="<?php echo $row['id_pinjam']; ?>">
+                  <div class="mb-3">
+                    <label for="nama_peminjam" class="form-label">Nama Peminjam</label>
+                    <input type="text" class="form-control" id="nama_peminjam" name="nama_peminjam" value="<?php echo $row['nama_peminjam']; ?>">
+                  </div>
+                  <div class="mb-3">
+                    <label for="id_ruang" class="form-label">Ruangan</label>
+                    <select id="id_ruang" name="id_ruang" class="form-control">
+                      <?php $ruangQuery = mysqli_query($conn, "SELECT * FROM m_ruang"); ?>
+                      <?php while ($ruangRow = mysqli_fetch_assoc($ruangQuery)) : ?>
+                        <option value="<?php echo $ruangRow['id_ruang'] ?>" <?php echo ($ruangRow['id_ruang'] == $row['id_ruang']) ? 'selected' : ''; ?>><?php echo $ruangRow['nama_ruang'] ?></option>
+                      <?php endwhile; ?>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="id_unit" class="form-label">Unit</label>
+                    <select id="id_unit" name="id_unit" class="form-control">
+                      <?php $unitQuery = mysqli_query($conn, "SELECT * FROM m_unit"); ?>
+                      <?php while ($unitRow = mysqli_fetch_assoc($unitQuery)) : ?>
+                        <option value="<?php echo $unitRow['id_unit'] ?>" <?php echo ($unitRow['id_unit'] == $row['id_unit']) ? 'selected' : ''; ?>><?php echo $unitRow['nama_unit'] ?></option>
+                      <?php endwhile; ?>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="tanggal" class="form-label">Tanggal</label>
+                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo $row['tanggal']; ?>">
+                  </div>
+                  <div class="mb-3">
+                    <label for="jam_awal" class="form-label" aria-describedby="Dari">Jam Peminjaman</label>
+                    <div id="Dari" class="form-text">Dari</div>
+                    <input type="time" class="form-control" id="jam_awal" name="jam_awal" aria-describedby="Sampai" value="<?php echo $row['jam_awal']; ?>">
+                    <div id="Sampai" class="form-text">Sampai</div>
+                    <input type="time" class="form-control" id="jam_akhir" name="jam_akhir" value="<?php echo $row['jam_akhir']; ?>">
+                  </div>
+                  <div class="mb-3">
+                    <label for="keterangan" class="form-label">Keterangan</label>
+                    <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?php echo $row['keterangan']; ?>">
+                  </div>
+                  <button type="submit" name="update" value="update" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Update</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      <?php endwhile; ?>
+
+
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Ruang</h1>
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <form method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                   <label for="nama_peminjam" class="form-label">Nama Peminjam</label>
-                  <input type="text" class="form-control" id="nama_peminjam" name="nama_peminjam">
+                  <input type="text" class="form-control" id="nama_peminjam" name="nama_peminjam" value="<?php echo $nama_peminjam; ?>">
                 </div>
                 <div class="mb-3">
                   <label for="id_ruang" class="form-label">Ruangan</label>
                   <select id="id_ruang" name="id_ruang" class="form-control">
                     <?php $query = mysqli_query($conn, "SELECT * FROM m_ruang"); ?>
                     <?php while ($row = mysqli_fetch_assoc($query)) : ?>
-                      <option value="<?php echo $row['id_ruang'] ?>"><?php echo $row['nama_ruang'] ?></option>
+                      <option value="<?php echo $row['id_ruang']; ?>" <?php if ($id_ruang == $row['id_ruang']) echo 'selected'; ?>>
+                        <?php echo $row['nama_ruang']; ?>
+                      </option>
                     <?php endwhile; ?>
                   </select>
                 </div>
+
                 <div class="mb-3">
                   <label for="id_unit" class="form-label">Unit</label>
                   <select id="id_unit" name="id_unit" class="form-control">
                     <?php $query = mysqli_query($conn, "SELECT * FROM m_unit"); ?>
                     <?php while ($row = mysqli_fetch_assoc($query)) : ?>
-                      <option value="<?php echo $row['id_unit'] ?>"><?php echo $row['nama_unit'] ?></option>
+                      <option value="<?php echo $row['id_unit']; ?>" <?php if ($id_unit == $row['id_unit']) echo 'selected'; ?>>
+                        <?php echo $row['nama_unit']; ?>
+                      </option>
                     <?php endwhile; ?>
                   </select>
                 </div>
+
                 <div class="mb-3">
                   <label for="tanggal" class="form-label">Tanggal</label>
-                  <input type="date" class="form-control" id="tanggal" name="tanggal">
+                  <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo $tanggal; ?>">
                 </div>
                 <div class="mb-3">
                   <label for="jam_awal" class="form-label" aria-describedby="Dari">Jam Peminjaman</label>
                   <div id="Dari" class="form-text">Dari</div>
-                  <input type="time" class="form-control" id="jam_awal" name="jam_awal" aria-describedby="Sampai">
+                  <input type="time" class="form-control" id="jam_awal" name="jam_awal" value="<?php echo $jam_awal; ?>" aria-describedby="Sampai">
                   <div id="Sampai" class="form-text">Sampai</div>
-                  <input type="time" class="form-control" id="jam_akhir" name="jam_akhir">
+                  <input type="time" class="form-control" id="jam_akhir" name="jam_akhir" value="<?php echo $jam_akhir; ?>">
                 </div>
                 <div class="mb-3">
                   <label for="keterangan" class="form-label">Keterangan</label>
-                  <input type="text" class="form-control" id="keterangan" name="keterangan">
+                  <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?php echo $keterangan; ?>">
                 </div>
-                <!-- <div class="mb-3 form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                  <label class="form-check-label" for="exampleCheck1">Saya sudah menyetujui</label>
-                  <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D">persyaratan dan ketentuan</a>
-                  <label class="form-check-label" for="exampleCheck1">yang berlaku</label>
-                </div> -->
-                <button type="submit" name="submit" value="Submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Submit</button>
+                <button type="submit" name="submit" value="Submit" class="btn btn-primary">Submit</button>
               </form>
             </div>
             <div class="modal-footer">
@@ -307,7 +404,7 @@ if (isset($_POST['submit'])) {
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Ruang</h1>
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah User</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2023 at 02:08 AM
+-- Generation Time: Nov 15, 2023 at 03:01 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -28,14 +28,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `jadwal_pinjam` (
-  `id_pinjam` varchar(255) NOT NULL,
+  `id_pinjam` int(255) NOT NULL,
   `tanggal` date NOT NULL,
   `jam_awal` time NOT NULL,
   `jam_akhir` time NOT NULL,
   `nama_peminjam` varchar(255) NOT NULL,
   `keterangan` varchar(255) NOT NULL,
-  `id_ruang` varchar(255) NOT NULL,
-  `id_unit` varchar(255) NOT NULL
+  `id_ruang` int(255) DEFAULT NULL,
+  `id_unit` int(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `jadwal_pinjam` (
 --
 
 INSERT INTO `jadwal_pinjam` (`id_pinjam`, `tanggal`, `jam_awal`, `jam_akhir`, `nama_peminjam`, `keterangan`, `id_ruang`, `id_unit`) VALUES
-('K9eXI', '2023-11-09', '09:32:00', '00:32:00', 'Adam', 'update', '0001', '0011');
+(2, '2023-11-15', '08:31:00', '08:31:00', 'Adam', 'hiya', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -52,7 +52,7 @@ INSERT INTO `jadwal_pinjam` (`id_pinjam`, `tanggal`, `jam_awal`, `jam_akhir`, `n
 --
 
 CREATE TABLE `m_ruang` (
-  `id_ruang` varchar(255) NOT NULL,
+  `id_ruang` int(255) NOT NULL,
   `nama_ruang` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -61,10 +61,7 @@ CREATE TABLE `m_ruang` (
 --
 
 INSERT INTO `m_ruang` (`id_ruang`, `nama_ruang`) VALUES
-('0001', 'Ruang Makan'),
-('0002', 'Ruang Keluarga'),
-('0003', 'Ruang Bermain'),
-('0004', 'Ruang Tidur');
+(2, 'Ruang Makan');
 
 -- --------------------------------------------------------
 
@@ -73,7 +70,7 @@ INSERT INTO `m_ruang` (`id_ruang`, `nama_ruang`) VALUES
 --
 
 CREATE TABLE `m_unit` (
-  `id_unit` varchar(255) NOT NULL,
+  `id_unit` int(255) NOT NULL,
   `nama_unit` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -82,9 +79,7 @@ CREATE TABLE `m_unit` (
 --
 
 INSERT INTO `m_unit` (`id_unit`, `nama_unit`) VALUES
-('0011', 'Primary'),
-('0012', 'Secondarys'),
-('0013', 'Tertiary');
+(3, 'Primary');
 
 -- --------------------------------------------------------
 
@@ -103,25 +98,7 @@ CREATE TABLE `m_user` (
 --
 
 INSERT INTO `m_user` (`username`, `pass`, `nama_user`) VALUES
-('adambahyn', '$2y$10$w98bM8C4JjUzYc.LCP/oCu.ygBaFuy2whHFUoDlpKil2QnPZnaPXi', 'adam');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `token`
---
-
-CREATE TABLE `token` (
-  `user_id` int(1) NOT NULL,
-  `token` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `token`
---
-
-INSERT INTO `token` (`user_id`, `token`) VALUES
-(1, 'admin');
+('admin', '$2y$10$GAXyJtEtqGajnBuRDD6Vt.oA.NxNzvUQeF5Lw9oNOiXH1vVboT2fm', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -132,6 +109,8 @@ INSERT INTO `token` (`user_id`, `token`) VALUES
 --
 ALTER TABLE `jadwal_pinjam`
   ADD PRIMARY KEY (`id_pinjam`),
+  ADD UNIQUE KEY `id_ruang` (`id_ruang`,`id_unit`),
+  ADD UNIQUE KEY `id_ruang_2` (`id_ruang`,`id_unit`),
   ADD KEY `jdwl-ruang` (`id_ruang`),
   ADD KEY `jdwl-unit` (`id_unit`);
 
@@ -154,10 +133,26 @@ ALTER TABLE `m_user`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `token`
+-- AUTO_INCREMENT for dumped tables
 --
-ALTER TABLE `token`
-  ADD PRIMARY KEY (`token`);
+
+--
+-- AUTO_INCREMENT for table `jadwal_pinjam`
+--
+ALTER TABLE `jadwal_pinjam`
+  MODIFY `id_pinjam` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `m_ruang`
+--
+ALTER TABLE `m_ruang`
+  MODIFY `id_ruang` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `m_unit`
+--
+ALTER TABLE `m_unit`
+  MODIFY `id_unit` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
