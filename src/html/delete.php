@@ -19,29 +19,52 @@ if (isset($_GET['delete_pinjam'])) {
 
 if (isset($_GET['delete_ruang'])) {
     $id_ruang = mysqli_real_escape_string($conn, $_GET['delete_ruang']);
-    // Proses DELETE ruang
-    $querydelete = "DELETE FROM m_ruang WHERE id_ruang = '$id_ruang'";
-    $resultdelete = mysqli_query($conn, $querydelete);
 
-    if ($resultdelete) {
-        $baseDirectory = "http://localhost/modern/pinjam/src/html/form-ruang.php";
-        header("Location: $baseDirectory");
+    $query_check_index = "SELECT * FROM jadwal_pinjam WHERE id_ruang = '$id_ruang'";
+    $result_check_index = mysqli_query($conn, $query_check_index);
+
+    if (mysqli_num_rows($result_check_index) > 0) {
+        // Display a warning message
+        echo '<script>alert("Data masih ada di Dashboard");</script>';
+        echo '<script>window.location.href = "http://localhost/modern/pinjam/src/html/ruang";</script>';
     } else {
-        echo '<script>alert("Terjadi Kesalahan saat menghapus data kegiatan.");</script>';
+        // No dependencies, proceed with deletion
+        $query_delete_ruang = "DELETE FROM m_ruang WHERE id_ruang = '$id_ruang'";
+        $result_delete_ruang = mysqli_query($conn, $query_delete_ruang);
+
+        if ($result_delete_ruang) {
+            // Deletion successful, redirect or perform other actions
+            header("http://localhost/modern/pinjam/src/html/ruang");
+        } else {
+            // Handle deletion error
+            echo '<script>alert("Error deleting room: ' . mysqli_error($conn) . '");</script>';
+        }
     }
 }
 
 if (isset($_GET['delete_unit'])) {
     $id_unit = mysqli_real_escape_string($conn, $_GET['delete_unit']);
-    // Proses DELETE unit
-    $querydelete = "DELETE FROM m_unit WHERE id_unit = '$id_unit'";
-    $resultdelete = mysqli_query($conn, $querydelete);
 
-  if ($resultdelete) {
-      $baseDirectory = "http://localhost/modern/pinjam/src/html/form-unit.php";
-      header("Location: $baseDirectory");
-  } else {
-      echo '<script>alert("Terjadi Kesalahan saat menghapus data kegiatan.");</script>';
-  }
+    // Check for dependencies in the "index" table
+    $query_check_index = "SELECT * FROM jadwal_pinjam WHERE id_unit = '$id_unit'";
+    $result_check_index = mysqli_query($conn, $query_check_index);
+
+    if (mysqli_num_rows($result_check_index) > 0) {
+        // Display a warning message
+        echo '<script>alert("Data masih ada di Dashboard");</script>';
+        echo '<script>window.location.href = "http://localhost/modern/pinjam/src/html/unit";</script>';
+
+    } else {
+        // No dependencies, proceed with deletion
+        $query_delete_unit = "DELETE FROM m_unit WHERE id_unit = '$id_unit'";
+        $result_delete_unit = mysqli_query($conn, $query_delete_unit);
+
+        if ($result_delete_unit) {
+            // Deletion successful, redirect or perform other actions
+            header("http://localhost/modern/pinjam/src/html/unit");
+        } else {
+            // Handle deletion error
+            echo '<script>alert("Error deleting unit: ' . mysqli_error($conn) . '");</script>';
+        }
+    }
 }
-
