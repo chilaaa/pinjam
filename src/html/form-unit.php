@@ -185,6 +185,9 @@ if (isset($_POST['tambah'])) {
                                     <thead class="text-dark fs-4">
                                         <tr>
                                             <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">No</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
                                                 <h6 class="fw-semibold mb-0">Nama Unit</h6>
                                             </th>
                                             <th class="border-bottom-0">
@@ -196,9 +199,15 @@ if (isset($_POST['tambah'])) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $query = mysqli_query($conn, "SELECT * FROM m_unit"); ?>
+                                        <?php
+                                        $query = mysqli_query($conn, "SELECT * FROM m_unit");
+                                        $counter = 1;
+                                        ?>
                                         <?php while ($row = mysqli_fetch_assoc($query)) : ?>
                                             <tr>
+                                                <td class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-0"><?php echo $counter; ?></h6>
+                                                </td>
                                                 <td class="border-bottom-0">
                                                     <h6 class="fw-semibold mb-1"><?php echo $row['nama_unit'] ?></h6>
                                                 </td>
@@ -210,6 +219,7 @@ if (isset($_POST['tambah'])) {
                                                 <td class="border-bottom-0">
                                                     <a href="delete.php?delete_unit=<?php echo $row['id_unit']; ?>" class="btn btn-danger">Delete</a>
                                                 </td>
+                                                <?php $counter++; ?>
                                             <?php endwhile; ?>
                                             </tr>
                                     </tbody>

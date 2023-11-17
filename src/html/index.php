@@ -212,6 +212,9 @@ if (isset($_POST['tambah'])) {
                           <h6 class="fw-semibold mb-0">Id</h6>
                         </th> -->
                         <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">No</h6>
+                        </th>
+                        <th class="border-bottom-0">
                           <h6 class="fw-semibold mb-0">Nama Peminjam</h6>
                         </th>
                         <th class="border-bottom-0">
@@ -238,12 +241,18 @@ if (isset($_POST['tambah'])) {
                       </tr>
                     </thead>
                     <tbody>
-                      <?php $query = mysqli_query($conn, "SELECT * FROM jadwal_pinjam"); ?>
+                      <?php
+                      $query = mysqli_query($conn, "SELECT * FROM jadwal_pinjam");
+                      $counter = 1; // Inisialisasi nomor urut
+                      ?>
                       <?php while ($row = mysqli_fetch_assoc($query)) : ?>
                         <tr>
                           <!-- <td class="border-bottom-0">
                             <h6 class="fw-semibold mb-0"></h6>
                           </td> -->
+                          <td class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0"><?php echo $counter; ?></h6>
+                          </td>
                           <td class="border-bottom-0">
                             <h6 class="fw-semibold mb-1"><?php echo $row['nama_peminjam'] ?></h6>
                           </td>
@@ -287,8 +296,8 @@ if (isset($_POST['tambah'])) {
                             <a href="delete.php?delete_pinjam=<?php echo $row['id_pinjam']; ?>" class="btn btn-danger">Delete</a>
                           </td>
                         </tr>
+                        <?php $counter++; ?>
                       <?php endwhile; ?>
-
                     </tbody>
                   </table>
                   <script>

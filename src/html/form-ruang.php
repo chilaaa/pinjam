@@ -196,6 +196,9 @@ if (isset($_POST['tambah'])) {
                           <h6 class="fw-semibold mb-0">id_ruang</h6>
                         </th> -->
                       <th class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0">No</h6>
+                      </th>
+                      <th class="border-bottom-0">
                         <h6 class="fw-semibold mb-0">Nama Ruang</h6>
                       </th>
                       <th class="border-bottom-0">
@@ -207,12 +210,17 @@ if (isset($_POST['tambah'])) {
                     </tr>
                   </thead>
                   <tbody>
-                    <?php $query = mysqli_query($conn, "SELECT * FROM m_ruang"); ?>
+                    <?php $query = mysqli_query($conn, "SELECT * FROM m_ruang");
+                    $counter = 1;
+                    ?>
                     <?php while ($row = mysqli_fetch_assoc($query)) : ?>
                       <tr>
                         <!-- <td class="border-bottom-0">
                             <h6 class="fw-semibold mb-0"></h6>
                           </td> -->
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0"><?php echo $counter; ?></h6>
+                        </td>
                         <td class="border-bottom-0">
                           <h6 class="fw-semibold mb-1"><?php echo $row['nama_ruang'] ?></h6>
                         </td>
@@ -224,6 +232,7 @@ if (isset($_POST['tambah'])) {
                         <td class="border-bottom-0">
                           <a href="delete.php?delete_ruang=<?php echo $row['id_ruang']; ?>" class="btn btn-danger">Delete</a>
                         </td>
+                        <?php $counter++; ?>
                       <?php endwhile; ?>
                       </tr>
                   </tbody>
