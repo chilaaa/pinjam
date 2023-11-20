@@ -34,7 +34,8 @@ if (isset($_GET['delete_ruang'])) {
 
         if ($result_delete_ruang) {
             // Deletion successful, redirect or perform other actions
-            header("http://localhost/modern/pinjam/src/html/ruang");
+            header("Location: http://localhost/modern/pinjam/src/html/ruang");
+            exit(); // Penting untuk mencegah eksekusi kode berikutnya setelah header
         } else {
             // Handle deletion error
             echo '<script>alert("Error deleting room: ' . mysqli_error($conn) . '");</script>';
@@ -53,7 +54,6 @@ if (isset($_GET['delete_unit'])) {
         // Display a warning message
         echo '<script>alert("Data masih ada di Dashboard");</script>';
         echo '<script>window.location.href = "http://localhost/modern/pinjam/src/html/unit";</script>';
-
     } else {
         // No dependencies, proceed with deletion
         $query_delete_unit = "DELETE FROM m_unit WHERE id_unit = '$id_unit'";
@@ -61,7 +61,8 @@ if (isset($_GET['delete_unit'])) {
 
         if ($result_delete_unit) {
             // Deletion successful, redirect or perform other actions
-            header("http://localhost/modern/pinjam/src/html/unit");
+            header("Location: http://localhost/modern/pinjam/src/html/unit");
+            exit(); // Penting untuk mencegah eksekusi kode berikutnya setelah header
         } else {
             // Handle deletion error
             echo '<script>alert("Error deleting unit: ' . mysqli_error($conn) . '");</script>';

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2023 at 03:01 AM
+-- Generation Time: Nov 20, 2023 at 01:43 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -38,13 +38,6 @@ CREATE TABLE `jadwal_pinjam` (
   `id_unit` int(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `jadwal_pinjam`
---
-
-INSERT INTO `jadwal_pinjam` (`id_pinjam`, `tanggal`, `jam_awal`, `jam_akhir`, `nama_peminjam`, `keterangan`, `id_ruang`, `id_unit`) VALUES
-(2, '2023-11-15', '08:31:00', '08:31:00', 'Adam', 'hiya', 2, 3);
-
 -- --------------------------------------------------------
 
 --
@@ -56,13 +49,6 @@ CREATE TABLE `m_ruang` (
   `nama_ruang` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `m_ruang`
---
-
-INSERT INTO `m_ruang` (`id_ruang`, `nama_ruang`) VALUES
-(2, 'Ruang Makan');
-
 -- --------------------------------------------------------
 
 --
@@ -73,13 +59,6 @@ CREATE TABLE `m_unit` (
   `id_unit` int(255) NOT NULL,
   `nama_unit` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `m_unit`
---
-
-INSERT INTO `m_unit` (`id_unit`, `nama_unit`) VALUES
-(3, 'Primary');
 
 -- --------------------------------------------------------
 
@@ -140,19 +119,19 @@ ALTER TABLE `m_user`
 -- AUTO_INCREMENT for table `jadwal_pinjam`
 --
 ALTER TABLE `jadwal_pinjam`
-  MODIFY `id_pinjam` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pinjam` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `m_ruang`
 --
 ALTER TABLE `m_ruang`
-  MODIFY `id_ruang` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_ruang` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `m_unit`
 --
 ALTER TABLE `m_unit`
-  MODIFY `id_unit` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_unit` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

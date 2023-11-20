@@ -96,10 +96,17 @@ if (isset($_POST['tambah'])) {
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
   <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
+  <style>
+    .button-container {
+      display: flex;
+      gap: 5px;
+      /* Jarak antara tombol */
+    }
+  </style>
 
 </head>
 
@@ -204,9 +211,6 @@ if (isset($_POST['tambah'])) {
                       <th class="border-bottom-0">
                         <h6 class="fw-semibold mb-0">#</h6>
                       </th>
-                      <th class="border-bottom-0">
-                        <h6 class="fw-semibold mb-0">#</h6>
-                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -225,13 +229,14 @@ if (isset($_POST['tambah'])) {
                           <h6 class="fw-semibold mb-1"><?php echo $row['nama_ruang'] ?></h6>
                         </td>
                         <td class="border-bottom-0">
-                          <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id_ruang']; ?>">
-                            Update
-                          </button>
-                        </td>
-                        <td class="border-bottom-0">
-                          <a href="delete.php?delete_ruang=<?php echo $row['id_ruang']; ?>" class="btn btn-danger">Delete</a>
-                        </td>
+                            <div class="button-container">
+                              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id_ruang']; ?>">
+                                <i class="bi bi-pencil"></i> <!-- Ganti dengan ikon yang diinginkan -->
+                              </button>
+                              <a href="delete.php?delete_ruang=<?php echo $row['id_ruang']; ?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                            </div>
+                          </td>
+                        
                         <?php $counter++; ?>
                       <?php endwhile; ?>
                       </tr>

@@ -106,10 +106,17 @@ if (isset($_POST['tambah'])) {
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
   <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
   <!-- <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"> -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+  .button-container {
+    display: flex;
+    gap: 5px; /* Jarak antara tombol */
+  }
+</style>
 </head>
 
 <body>
@@ -233,11 +240,11 @@ if (isset($_POST['tambah'])) {
                           <h6 class="fw-semibold mb-0">Keterangan</h6>
                         </th>
                         <th class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">#</h6>
+                          <h6 class="fw-semibold mb-0">Aksi</h6>
                         </th>
-                        <th class="border-bottom-0">
+                        <!-- <th class="border-bottom-0">
                           <h6 class="fw-semibold mb-0">#</h6>
-                        </th>
+                        </th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -288,13 +295,16 @@ if (isset($_POST['tambah'])) {
                             <h6 class="fw-semibold mb-1"><?php echo $row['keterangan'] ?></h6>
                           </td>
                           <td class="border-bottom-0">
-                            <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id_pinjam']; ?>">
-                              Update
-                            </button>
+                            <div class="button-container">
+                              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id_pinjam']; ?>">
+                                <i class="bi bi-pencil"></i> <!-- Ganti dengan ikon yang diinginkan -->
+                              </button>
+                              <a href="delete.php?delete_pinjam=<?php echo $row['id_pinjam']; ?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                            </div>
                           </td>
-                          <td class="border-bottom-0">
-                            <a href="delete.php?delete_pinjam=<?php echo $row['id_pinjam']; ?>" class="btn btn-danger">Delete</a>
-                          </td>
+                          <!-- <td class="border-bottom-0">
+                            <a href="delete.php?delete_pinjam=<?php echo $row['id_pinjam']; ?>" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                          </td> -->
                         </tr>
                         <?php $counter++; ?>
                       <?php endwhile; ?>
