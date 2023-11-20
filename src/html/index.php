@@ -205,7 +205,7 @@ if (isset($_POST['tambah'])) {
           </button>
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title fw-semibold mb-4">Tabel Pinjam</h5>
+              <h5 class="card-title fw-semibold mb-4">Peminjaman</h5>
               <div class="table-responsive">
                 <div class="table-container" id="tabelPinjam">
                   <!-- <div class="mb-3">
