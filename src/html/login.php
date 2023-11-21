@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
     if (password_verify($password, $row['pass'])) {
       $_SESSION['username'] = $row['username'];
       $_SESSION['nama_user'] = $row['nama_user'];
-      header("Location: dashboard");
+      header("Location: index.php");
     } else {
       echo "<script>alert('Email atau password Anda salah. Silahkan coba lagi!')</script>";
     }

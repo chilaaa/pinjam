@@ -125,7 +125,7 @@ if (isset($_POST['tambah'])) {
               <span class="hide-menu">Home</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./dashboard" aria-expanded="false">
+              <a class="sidebar-link" href="./index.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
@@ -137,7 +137,7 @@ if (isset($_POST['tambah'])) {
               <span class="hide-menu">Data Master</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./ruang" aria-expanded="false">
+              <a class="sidebar-link" href="./form-ruang" aria-expanded="false">
                 <span>
                   <i class="ti ti-file-description"></i>
                 </span>
@@ -145,7 +145,7 @@ if (isset($_POST['tambah'])) {
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./unit" aria-expanded="false">
+              <a class="sidebar-link" href="./form-unit.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-file-description"></i>
                 </span>

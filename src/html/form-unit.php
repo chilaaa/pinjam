@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($conn, $query);
     if ($result) {
         // Eksekusi berhasil, arahkan ke URL yang diinginkan
-        $baseDirectory = "http://localhost/modern/pinjam/src/html/unit";
+        $baseDirectory = "http://localhost/modern/pinjam/src/html/form-unit.php";
         header("Location: $baseDirectory");
     } else {
         echo '<script>alert("Terjadi Kesalahan: ' . mysqli_error($conn) . '");</script>';
@@ -38,7 +38,7 @@ if (isset($_POST['update'])) {
     $resultupdate = mysqli_query($conn, $queryupdate);
     if ($resultupdate) {
         // Eksekusi berhasil, arahkan ke URL yang diinginkan
-        $baseDirectory = "http://localhost/modern/pinjam/src/html/unit";
+        $baseDirectory = "http://localhost/modern/pinjam/src/html/form-unit.php";
         header("Location: $baseDirectory");
         exit();  // Add exit() to stop further execution
     } else {
@@ -59,7 +59,7 @@ if (isset($_POST['tambah'])) {
     $result = mysqli_query($conn, $query);
     if ($result) {
         // Eksekusi berhasil, arahkan ke URL yang diinginkan
-        $baseDirectory = "http://localhost/modern/pinjam/src/html/dashboard";
+        $baseDirectory = "http://localhost/modern/pinjam/src/html/index.php";
         header("Location: $baseDirectory");
     } else {
         echo '<script>alert("Terjadi Kesalahan");</script>';
@@ -106,7 +106,7 @@ if (isset($_POST['tambah'])) {
                             <span class="hide-menu">Home</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./dashboard" aria-expanded="false">
+                            <a class="sidebar-link" href="./index.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-layout-dashboard"></i>
                                 </span>
@@ -124,7 +124,7 @@ if (isset($_POST['tambah'])) {
                             <span class="hide-menu">Data Master</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./ruang" aria-expanded="false">
+                            <a class="sidebar-link" href="./form-ruang.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-file-description"></i>
                                 </span>
@@ -132,7 +132,7 @@ if (isset($_POST['tambah'])) {
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./unit" aria-expanded="false">
+                            <a class="sidebar-link" href="./form-unit.php" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-file-description"></i>
                                 </span>
