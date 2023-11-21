@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
   $result = mysqli_query($conn, $query);
   if ($result) {
     // Eksekusi berhasil, arahkan ke URL yang diinginkan
-    $baseDirectory = "http://localhost/modern/src/html/ruang";
+    $baseDirectory = "http://localhost/modern/src/html/form-ruang.php";
     header("Location: $baseDirectory");
   } else {
     echo '<script>alert("Terjadi Kesalahan: ' . mysqli_error($conn) . '");</script>';
