@@ -141,18 +141,12 @@ if (isset($_POST['tambah'])) {
                 <span class="hide-menu">Dashboard</span>
               </a>
             </li>
-            <!-- <select class="form-select">
-              <option value="1">March 2023</option>
-              <option value="2">April 2023</option>
-              <option value="3">May 2023</option>
-              <option value="4">June 2023</option>
-            </select> -->
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Data Master</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./form-ruang.php" aria-expanded="false">
+              <a class="sidebar-link" href="./ruang.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-file-description"></i>
                 </span>
@@ -160,7 +154,7 @@ if (isset($_POST['tambah'])) {
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./form-unit.php" aria-expanded="false">
+              <a class="sidebar-link" href="./unit.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-file-description"></i>
                 </span>

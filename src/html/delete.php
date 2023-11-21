@@ -26,7 +26,7 @@ if (isset($_GET['delete_ruang'])) {
     if (mysqli_num_rows($result_check_index) > 0) {
         // Display a warning message
         echo '<script>alert("Data masih ada di Dashboard");</script>';
-        header("Location: form-ruang.php");
+        header("Location: ruang.php");
         exit(); // Ensure that no other code is executed after the header redirection
     } else {
         // No dependencies, proceed with deletion
@@ -35,7 +35,7 @@ if (isset($_GET['delete_ruang'])) {
 
         if ($result_delete_ruang) {
             // Deletion successful, redirect or perform other actions
-            header("Location: form-ruang.php");
+            header("Location: ruang.php");
             exit(); // Penting untuk mencegah eksekusi kode berikutnya setelah header
         } else {
             // Handle deletion error
@@ -54,7 +54,7 @@ if (isset($_GET['delete_unit'])) {
     if (mysqli_num_rows($result_check_index) > 0) {
         // Display a warning message
         echo '<script>alert("Data masih ada di Dashboard");</script>';
-        header("Location: form-unit.php");
+        header("Location: unit.php");
         exit(); // Ensure that no other code is executed after the header redirection    } else {
         // No dependencies, proceed with deletion
         $query_delete_unit = "DELETE FROM m_unit WHERE id_unit = '$id_unit'";
@@ -62,7 +62,7 @@ if (isset($_GET['delete_unit'])) {
 
         if ($result_delete_unit) {
             // Deletion successful, redirect or perform other actions
-            header("Location: form-unit.php");
+            header("Location: unit.php");
             exit(); // Penting untuk mencegah eksekusi kode berikutnya setelah header
         } else {
             // Handle deletion error
