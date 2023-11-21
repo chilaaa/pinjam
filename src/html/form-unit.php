@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($conn, $query);
     if ($result) {
         // Eksekusi berhasil, arahkan ke URL yang diinginkan
-        $baseDirectory = "http://localhost/modern/src/html/form-unit.php";
+        $baseDirectory = "form-unit.php";
         header("Location: $baseDirectory");
     } else {
         echo '<script>alert("Terjadi Kesalahan: ' . mysqli_error($conn) . '");</script>';
@@ -38,7 +38,7 @@ if (isset($_POST['update'])) {
     $resultupdate = mysqli_query($conn, $queryupdate);
     if ($resultupdate) {
         // Eksekusi berhasil, arahkan ke URL yang diinginkan
-        $baseDirectory = "http://localhost/modern/src/html/form-unit.php";
+        $baseDirectory = "form-unit.php";
         header("Location: $baseDirectory");
         exit();  // Add exit() to stop further execution
     } else {
@@ -59,7 +59,7 @@ if (isset($_POST['tambah'])) {
     $result = mysqli_query($conn, $query);
     if ($result) {
         // Eksekusi berhasil, arahkan ke URL yang diinginkan
-        $baseDirectory = "http://localhost/modern/src/html/index.php";
+        $baseDirectory = "index.php";
         header("Location: $baseDirectory");
     } else {
         echo '<script>alert("Terjadi Kesalahan");</script>';

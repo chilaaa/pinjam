@@ -10,7 +10,7 @@ if (isset($_GET['delete_pinjam'])) {
     $resultdelete = mysqli_query($conn, $querydelete);
 
     if ($resultdelete) {
-        $baseDirectory = "http://localhost/modern/pinjam/src/html/index.php";
+        $baseDirectory = "index.php";
         header("Location: $baseDirectory");
     } else {
         echo '<script>alert("Terjadi Kesalahan saat menghapus data kegiatan.");</script>';
@@ -26,7 +26,8 @@ if (isset($_GET['delete_ruang'])) {
     if (mysqli_num_rows($result_check_index) > 0) {
         // Display a warning message
         echo '<script>alert("Data masih ada di Dashboard");</script>';
-        echo '<script>window.location.href = "http://localhost/modern/pinjam/src/html/form-ruang.php";</script>';
+        header("Location: form-ruang.php");
+        exit(); // Ensure that no other code is executed after the header redirection
     } else {
         // No dependencies, proceed with deletion
         $query_delete_ruang = "DELETE FROM m_ruang WHERE id_ruang = '$id_ruang'";
@@ -34,7 +35,7 @@ if (isset($_GET['delete_ruang'])) {
 
         if ($result_delete_ruang) {
             // Deletion successful, redirect or perform other actions
-            header("Location: http://localhost/modern/pinjam/src/html/form-ruang.php");
+            header("Location: form-ruang.php");
             exit(); // Penting untuk mencegah eksekusi kode berikutnya setelah header
         } else {
             // Handle deletion error
@@ -53,15 +54,15 @@ if (isset($_GET['delete_unit'])) {
     if (mysqli_num_rows($result_check_index) > 0) {
         // Display a warning message
         echo '<script>alert("Data masih ada di Dashboard");</script>';
-        echo '<script>window.location.href = "http://localhost/modern/pinjam/src/html/form-unit.php";</script>';
-    } else {
+        header("Location: form-unit.php");
+        exit(); // Ensure that no other code is executed after the header redirection    } else {
         // No dependencies, proceed with deletion
         $query_delete_unit = "DELETE FROM m_unit WHERE id_unit = '$id_unit'";
         $result_delete_unit = mysqli_query($conn, $query_delete_unit);
 
         if ($result_delete_unit) {
             // Deletion successful, redirect or perform other actions
-            header("Location: http://localhost/modern/pinjam/src/html/form-unit.php");
+            header("Location: form-unit.php");
             exit(); // Penting untuk mencegah eksekusi kode berikutnya setelah header
         } else {
             // Handle deletion error

@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /modern/pinjam/src/html/
+RewriteBase /modern/src/html/
 
 # Redirect index.php to dashboard
 RewriteRule ^dashboard$ index.php [L]
